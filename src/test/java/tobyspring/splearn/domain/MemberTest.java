@@ -115,4 +115,12 @@ class MemberTest {
         assertThat(member.isActive()).isTrue();
     }
 
+    @DisplayName("올바른 이메일 형식인 경우에만 회원을 생성할 수 있다.")
+    @Test
+    void invalidEmail() {
+        // given // when // then
+        assertThatThrownBy(() -> Member.create(new MemberCreateRequest("invalidEmail", "yeop", password), passwordEncoder))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
