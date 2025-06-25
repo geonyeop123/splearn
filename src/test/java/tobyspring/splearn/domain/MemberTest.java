@@ -27,7 +27,7 @@ class MemberTest {
             }
         };
         password = "secret";
-        member = Member.create("geonyeop123@gmail.com", "yeop", password, passwordEncoder);
+        member = Member.create(new MemberCreateRequest("geonyeop123@gmail.com", "yeop", password), passwordEncoder);
     }
 
     @DisplayName("회원을 생성하면 회원 상태는 대기이다.")
@@ -104,6 +104,15 @@ class MemberTest {
         // given // when // then
         member.changePassword("verySecret", passwordEncoder);
         assertThat(member.verifyPassword("verySecret", passwordEncoder)).isTrue();
+    }
+
+    @DisplayName("회원의 상태가 ACTIVE인지 확인할 수 있다.")
+    @Test
+    void isActive() {
+        // given // then // when
+        assertThat(member.isActive()).isFalse();
+        member.activate();
+        assertThat(member.isActive()).isTrue();
     }
 
 }
